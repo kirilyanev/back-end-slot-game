@@ -88,31 +88,16 @@ export default class Slot {
     let multiplier = 0;
 
     for (const line of payoutLines) {
-      let currentSymbol = null;
-      let winnigSymbol = null;
-      let consecutiveCount = 0;
-      let winSymbolsCounter = 0;
-      let currentMultiplier = 0;
+      const firstElement = line[0];
+      const multiplierIndex = line.findIndex(
+        (element) => element !== firstElement
+      );
 
-      for (const symbol of line) {
-        if (symbol === currentSymbol) {
-          consecutiveCount++;
-        } else {
-          currentSymbol = symbol;
-          consecutiveCount = 1;
-        }
+      const currentMultiplier = this.symbols[firstElement][multiplierIndex - 1];
 
-        if (consecutiveCount > 2) {
-          winSymbolsCounter = consecutiveCount;
-          winnigSymbol = symbol;
-        }
+      if (currentMultiplier && currentMultiplier > 0) {
+        multiplier += currentMultiplier;
       }
-
-      currentMultiplier = winnigSymbol
-        ? this.symbols[winnigSymbol][winSymbolsCounter - 1]
-        : 0;
-
-      multiplier += currentMultiplier;
     }
     return multiplier;
   }
