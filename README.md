@@ -35,15 +35,17 @@ Example of back-end logic for a simple slot game with a given configuration
 
 1.2. To execute a spin with specified bet run the following command:
 
-````bash
+```bash
 npm run start <betSize>
+```
 
 Note: Enter desired bet amount (number) instead betSize.
 
 2. To execute the simulation script run the following command:
 
-```bash
-npm run spin-simulator
+   ```bash
+   npm run spin-simulator
+   ```
 
 Note: By default the script runs with default bet = 1;
 
@@ -51,14 +53,13 @@ Note: By default the script runs with default bet = 1;
 
 ```bash
 npm run spin-simulator <betSize>
+```
 
 Note: Enter desired bet amount (number) instead betSize.
 
-
 ### Commands 💻
 
-| Command                 | Description                                                          |
-| ----------------------- | -------------------------------------------------------------------- |
-| `npm run start`         | Execute single spin                                                  |
-| `npm run spin-simulator`| Execute spin simulator script                                        |
-````
+| Command                  | Description                   |
+| ------------------------ | ----------------------------- |
+| `npm run start`          | Execute single spin           |
+| `npm run spin-simulator` | Execute spin simulator script |
