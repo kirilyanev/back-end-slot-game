@@ -46,44 +46,64 @@ export default class Slot {
         spinData.reels[reelIndex].push(symbol);
       }
     }
-    const multiplier = this.calculateMultiplier(spinData);
-    const win = multiplier * betAmount;
-    const result = win - betAmount;
 
-    spinData.bet = betAmount;
+    const payoutLines = this.getPayoutLines(spinData);
+    const multiplier = this.calculateMultiplier(payoutLines);
+
+    const win = multiplier * betAmount;
+
+    spinData.linesPayout = payoutLines;
     spinData.multiplier = multiplier;
     spinData.win = win;
 
     return spinData;
   }
 
-  private calculateMultiplier(spinResult: spinData) {
-    let multiplier = 0;
-    let lineIndex = 0;
-
+  private getPayoutLines(spinResult: spinData) {
+    const payoutLines = [];
     for (const line of this.lines) {
-      const winningLine: number[] = [];
-      for (let i = 0; i < line.length; i++) {
+      const payoutLine: number[] = [];
+      for (let i = 0; i < this.lines.length; i++) {
         const symbol = spinResult.reels[i][line[i]];
-        winningLine[i] = symbol;
+        payoutLine.push(symbol);
       }
 
-      spinResult.linesPayout[lineIndex] = winningLine;
-      lineIndex++;
-      const frequencyMap: Record<number, number> = {};
-
-      winningLine.forEach((number) => {
-        frequencyMap[number] = (frequencyMap[number] || 0) + 1;
-      });
-
-      Object.keys(frequencyMap).forEach((symbol) => {
-        const frequency = frequencyMap[parseInt(symbol)];
-        const currentMultiplier = this.symbols[parseInt(symbol)][frequency - 1];
-
-        multiplier += currentMultiplier;
-      });
+      payoutLines.push(payoutLine);
     }
 
+    return payoutLines;
+  }
+
+  private calculateMultiplier(payoutLines: number[][]) {
+    let multiplier = 0;
+
+    for (const line of payoutLines) {
+      let currentSymbol = null;
+      let winnigSymbol = null;
+      let consecutiveCount = 0;
+      let winSymbolsCounter = 0;
+      let currentMultiplier = 0;
+
+      for (const symbol of line) {
+        if (symbol === currentSymbol) {
+          consecutiveCount++;
+        } else {
+          currentSymbol = symbol;
+          consecutiveCount = 1;
+        }
+
+        if (consecutiveCount > 2) {
+          winSymbolsCounter = consecutiveCount;
+          winnigSymbol = symbol;
+        }
+      }
+
+      currentMultiplier = winnigSymbol
+        ? this.symbols[winnigSymbol][winSymbolsCounter - 1]
+        : 0;
+
+      multiplier += currentMultiplier;
+    }
     return multiplier;
   }
 }

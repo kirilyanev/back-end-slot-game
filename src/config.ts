@@ -68,5 +68,5 @@ export default {
 
   betAmounts: [1, 2, 5, 10, 20, 50, 100],
   defaultBet: 1,
-  spinsCount: 10000,
+  spinsCount: 100000,
 };
