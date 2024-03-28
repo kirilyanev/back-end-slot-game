@@ -61,14 +61,24 @@ export default class Slot {
 
   private getPayoutLines(spinResult: spinData) {
     const payoutLines = [];
+
     for (const line of this.lines) {
       const payoutLine: number[] = [];
+
       for (let i = 0; i < this.lines.length; i++) {
         const symbol = spinResult.reels[i][line[i]];
         payoutLine.push(symbol);
       }
 
-      payoutLines.push(payoutLine);
+      const firstElement = payoutLine[0];
+
+      const consecutiveSymbols = payoutLine.findIndex(
+        (element) => element !== firstElement
+      );
+
+      if (consecutiveSymbols && consecutiveSymbols > 2) {
+        payoutLines.push(payoutLine);
+      }
     }
 
     return payoutLines;
