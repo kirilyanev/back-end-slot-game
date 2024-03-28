@@ -59,7 +59,9 @@ Note: Enter desired bet amount (number) instead betSize.
 
 ### Commands 💻
 
-| Command                  | Description                   |
-| ------------------------ | ----------------------------- |
-| `npm run start`          | Execute single spin           |
-| `npm run spin-simulator` | Execute spin simulator script |
+| Command                    | Description                              |
+| -------------------------- | ---------------------------------------- |
+| `npm run start`            | Execute single spin                      |
+| `npm run start 5`          | Execute single spin with bet 5           |
+| `npm run spin-simulator`   | Execute spin simulator script            |
+| `npm run spin-simulator 5` | Execute spin simulator script with bet 5 |
